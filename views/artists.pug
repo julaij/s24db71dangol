@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h1= title
+  - const results = [{ artist_name: "Leonardo da Vinci", artist_country: 'Italy', artist_masterpiece: "Mona Lisa" }, { artist_name: "Vincent van Gogh", artist_country: 'Netherlands', artist_masterpiece: "The Starry Night" }, { artist_name: "Pablo Picasso", artist_country: 'Spain', artist_masterpiece: "Guernica" }]
+  div(class = 'container-fluid')
+    each result, index in results
+      div(class='row' onclick=`buy(${index})`)
+        div(class='col-sm-2') #{result.artist_name} 
+        div(class='col-sm-2') #{result.artist_country} 
+        div(class='col-sm-2') #{result.artist_masterpiece}
+  script.
+    function buy(index) {
+      alert("You purchased item " + index);
+    }
