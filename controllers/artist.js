@@ -1,7 +1,14 @@
 var Artist = require('../models/artist');
 // List of all Artists
-exports.artist_list = function(req, res) {
- res.send('NOT IMPLEMENTED: Artist list');
+exports.artist_list = async function(req, res) {
+    try {
+        theArtists = await Artist.find();
+        res.send(theArtists);
+    }
+    catch(error){
+        res.status(500);
+        res.send(`error:${error}`);
+    }
 };
 // for a specific Artist.
 exports.artist_detail = function(req, res) {
