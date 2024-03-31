@@ -7,9 +7,23 @@ exports.artist_list = async function(req, res) {
     }
     catch(error){
         res.status(500);
-        res.send(`error:${error}`);
+        res.send(`{"error":${error}}`);
     }
 };
+
+// VIEWS
+// Handle a show all view
+exports.artist_view_all_Page = async function(req, res) {
+    try{
+    theArtists = await Artist.find();
+    res.render('artists', { title: 'Artist Search Results', results: theArtists });
+    }
+    catch(err){
+    res.status(500);
+    res.send(`{"error": ${err}}`);
+    }
+   };
+
 // for a specific Artist.
 exports.artist_detail = function(req, res) {
  res.send('NOT IMPLEMENTED: Artist detail: ' + req.params.id);
