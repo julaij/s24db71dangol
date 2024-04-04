@@ -1,11 +1,11 @@
 var Artist = require('../models/artist');
 // List of all Artists
-exports.artist_list = async function(req, res) {
+exports.artist_list = async function (req, res) {
     try {
         theArtists = await Artist.find();
         res.send(theArtists);
     }
-    catch(error){
+    catch (error) {
         res.status(500);
         res.send(`{"error":${error}}`);
     }
@@ -13,35 +13,30 @@ exports.artist_list = async function(req, res) {
 
 // VIEWS
 // Handle a show all view
-exports.artist_view_all_Page = async function(req, res) {
-    try{
-    theArtists = await Artist.find();
-    res.render('artists', { title: 'Artist Search Results', results: theArtists });
+exports.artist_view_all_Page = async function (req, res) {
+    try {
+        theArtists = await Artist.find();
+        res.render('artists', { title: 'Artist Search Results', results: theArtists });
     }
-    catch(err){
-    res.status(500);
-    res.send(`{"error": ${err}}`);
+    catch (err) {
+        res.status(500);
+        res.send(`{"error": ${err}}`);
     }
-   };
+};
 
-
-   // for a specific Costume.
-exports.costume_detail = async function(req, res) {
-   
-   };
 // for a specific Artist.
-exports.artist_detail = async function(req, res) {
+exports.artist_detail = async function (req, res) {
     console.log("detail" + req.params.id)
     try {
-    result = await Artist.findById( req.params.id)
-    res.send(result)
+        result = await Artist.findById(req.params.id)
+        res.send(result)
     } catch (error) {
-    res.status(500)
-    res.send(`{"error": document for id ${req.params.id} not found`);
+        res.status(500)
+        res.send(`{"error": document for id ${req.params.id} not found`);
     }
 };
 // Handle Artist create on POST.
-exports.artist_create_post = async function(req, res) {
+exports.artist_create_post = async function (req, res) {
     console.log(req.body)
     let document = new Artist();
     // We are looking for a body, since POST does not have query parameters.
@@ -51,20 +46,35 @@ exports.artist_create_post = async function(req, res) {
     document.artist_name = req.body.artist_name;
     document.artist_masterpiece_cost = req.body.artist_masterpiece_cost;
     document.artist_masterpiece_name = req.body.artist_masterpiece_name;
-    try{
-    let result = await document.save();
-    res.send(result);
+    try {
+        let result = await document.save();
+        res.send(result);
     }
-    catch(err){
-    res.status(500);
-    res.send(`{"error": ${err}}`);
+    catch (err) {
+        res.status(500);
+        res.send(`{"error": ${err}}`);
     }
-   };
-// Handle Artist delete from on DELETE.
-exports.artist_delete = function(req, res) {
- res.send('NOT IMPLEMENTED: Artist delete DELETE ' + req.params.id);
 };
+// Handle Artist delete from on DELETE.
+exports.artist_delete = function (req, res) {
+    res.send('NOT IMPLEMENTED: Artist delete DELETE ' + req.params.id);
+};
+
 // Handle Artist update form on PUT.
-exports.artist_update_put = function(req, res) {
- res.send('NOT IMPLEMENTED: Artist update PUT' + req.params.id);
+exports.artist_update_put = async function (req, res) {
+    console.log(`update on id ${req.params.id} with body${JSON.stringify(req.body)}`)
+    try {
+        let toUpdate = await Artist.findById(req.params.id)
+        // Do updates of properties
+        if (req.body.artist_name)
+            toUpdate.artist_name = req.body.artist_name;
+        if (req.body.artist_masterpiece_cost) toUpdate.artist_masterpiece_cost = req.body.artist_masterpiece_cost;
+        if (req.body.artist_masterpiece_name) toUpdate.artist_masterpiece_name = req.body.artist_masterpiece_name;
+        let result = await toUpdate.save();
+        console.log("Sucess " + result)
+        res.send(result)
+    } catch (err) {
+        res.status(500)
+        res.send(`{"error": ${err}: Update for id ${req.params.id} failed`);
+    }
 };

@@ -6,6 +6,6 @@ var router = express.Router();
 router.get('/', artist_controlers.artist_view_all_Page );
 
 // GET request for one costume.
-router.get('/artists/:id', artist_controlers.costume_detail);
+router.get('/artists/:id', artist_controlers.artist_detail);
 
 module.exports = router;
