@@ -24,9 +24,21 @@ exports.artist_view_all_Page = async function(req, res) {
     }
    };
 
+
+   // for a specific Costume.
+exports.costume_detail = async function(req, res) {
+   
+   };
 // for a specific Artist.
-exports.artist_detail = function(req, res) {
- res.send('NOT IMPLEMENTED: Artist detail: ' + req.params.id);
+exports.artist_detail = async function(req, res) {
+    console.log("detail" + req.params.id)
+    try {
+    result = await Artist.findById( req.params.id)
+    res.send(result)
+    } catch (error) {
+    res.status(500)
+    res.send(`{"error": document for id ${req.params.id} not found`);
+    }
 };
 // Handle Artist create on POST.
 exports.artist_create_post = async function(req, res) {
