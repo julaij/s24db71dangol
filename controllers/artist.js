@@ -24,6 +24,22 @@ exports.artist_view_all_Page = async function (req, res) {
     }
 };
 
+
+//view controllers
+// Handle a show one view with id specified by query
+exports.artist_view_one_Page = async function (req, res) {
+    console.log("single view for id " + req.query.id)
+    try {
+        result = await Artist.findById(req.query.id)
+        res.render('artistdetail',
+            { title: 'Artist Detail', toShow: result });
+    }
+    catch (err) {
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
 // for a specific Artist.
 exports.artist_detail = async function (req, res) {
     console.log("detail" + req.params.id)
@@ -56,8 +72,16 @@ exports.artist_create_post = async function (req, res) {
     }
 };
 // Handle Artist delete from on DELETE.
-exports.artist_delete = function (req, res) {
-    res.send('NOT IMPLEMENTED: Artist delete DELETE ' + req.params.id);
+exports.artist_delete = async function (req, res) {
+    console.log("delete " + req.params.id)
+    try {
+        result = await Artist.findByIdAndDelete(req.params.id)
+        console.log("Removed " + result)
+        res.send(result)
+    } catch (err) {
+        res.status(500)
+        res.send(`{"error": Error deleting ${err}}`);
+    }
 };
 
 // Handle Artist update form on PUT.
