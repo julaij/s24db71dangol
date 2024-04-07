@@ -66,6 +66,22 @@ exports.artist_update_Page = async function (req, res) {
     }
 };
 
+// Handle a delete one view with id from query
+exports.artist_delete_Page = async function (req, res) {
+    console.log("Delete view for id " + req.query.id)
+    try {
+        result = await Artist.findById(req.query.id)
+        res.render('artistdelete', {
+            title: 'Artist Delete', toShow:
+                result
+        });
+    }
+    catch (err) {
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
 // for a specific Artist.
 exports.artist_detail = async function (req, res) {
     console.log("detail" + req.params.id)

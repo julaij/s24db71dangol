@@ -1,0 +1,50 @@
+extends layout
+block content
+  h1= title
+  if (toShow == null)
+    h2 No instance to delete
+  else
+    - let artistid = toShow._id
+    - let artist_name = toShow.artist_name
+    - let artist_masterpiece_cost = toShow.artist_masterpiece_cost
+    - let artist_masterpiece_name = toShow.artist_masterpiece_name
+    - let actionid = "/resource/artists/" + artistid
+    script.
+      let actionid = "#{actionid}"
+    div
+      div.row
+        div(class='artistAttr mr-3') Artist ID is:
+        div #{artistid}
+      div.row
+        div(class='artistAttr mr-3') Artist Name is:
+        div #{artist_name}
+      div.row
+        div(class='artistAttr mr-3') Artist Masterpiece Cost is:
+        div #{artist_masterpiece_cost}
+      div.row
+        div(class='artistAttr mr-3') Artist Masterpiece Name is:
+        div #{artist_masterpiece_name}
+    button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
+    button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
+    script.
+      function cancel() {
+        // Go back to the home page for the costume collection
+        window.location.href='/artists'
+      }
+    script.
+      function deleteOnid() {
+        console.log("starting delete")
+        // delete first
+        fetch(actionid, {
+          method: 'DELETE' // Don't need a body for the delete
+        }).then((resp) => {
+          return resp.json(); // or resp.text() or whatever the server sends
+        }).then((body) => {
+          alert("Delete succeded")
+          window.location.href='/artists'
+          // TODO handle body
+        }).catch((error) => {
+          // TODO handle error
+          alert("Delete failed " + error )
+        });
+      }
