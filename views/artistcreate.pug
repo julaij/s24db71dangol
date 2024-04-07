@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  h1= title
+  form(id='ArtistForm', action="/resource/artists", method="POST")
+    div.form-group
+      label.artistAttr(for='artist_name') Artist name
+      input#artist_name(type='text', name='artist_name')
+    div.form-group
+      label.artistAttr(for='artist_masterpiece_cost') Artist masterpiece cost
+      input#size(type='number', name='artist_masterpiece_cost')
+    div.form-group
+      label.artistAttr(for='artist_masterpiece_name') Artist masterpiece name
+      input#cost(type='text', name='artist_masterpiece_name')
+    input(type="submit")
+  script.
+    document.forms[`ArtistForm`].addEventListener('submit', (event) => {
+      event.preventDefault();
+      // TODO do something here to show user that form is being submitted
+      fetch(event.target.action, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+      }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+      }).then((body) => {
+        alert("Save succeeded")
+        // TODO handle body
+      }).catch((error) => {
+        // TODO handle error
+        alert("Save failed " + error)
+      });
+    });

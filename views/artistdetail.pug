@@ -1,20 +1,21 @@
 extends layout
+
 block content
- h1= title
- - let artistid = toShow._id
- - let artist_name = toShow.artist_name
- - let artist_masterpiece_cost = toShow.artist_masterpiece_cost
- - let artist_masterpiece_name = toShow.artist_masterpiece_name
- div
- div.row
- div(class='artistAttr mr-3') Artist ID is:
- div #{artistid}
- div.row
- div(class='artistAttr mr-3') Artist Name is:
- div #{artist_name}
- div.row
- div(class='artistAttr mr-3') Artist masterpiece cost is:
- div #{artist_masterpiece_cost}
- div.row
- div(class='artistAttr mr-3') Artist masterpiece name is:
- div #{artist_masterpiece_name}
+  h1= title
+  - let artistid = toShow._id
+  - let artist_name = toShow.artist_name
+  - let artist_masterpiece_cost = toShow.artist_masterpiece_cost
+  - let artist_masterpiece_name = toShow.artist_masterpiece_name
+  div
+    div.row
+      div(class='artistAttr mr-3') Artist ID is:
+      div #{artistid}
+    div.row
+      div(class='artistAttr mr-3') Artist Name is:
+      div #{artist_name}
+    div.row
+      div(class='artistAttr mr-3') Artist masterpiece cost is:
+      div #{artist_masterpiece_cost}
+    div.row
+      div(class='artistAttr mr-3') Artist masterpiece name is:
+      div #{artist_masterpiece_name}
