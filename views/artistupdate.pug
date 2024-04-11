@@ -1,40 +1,43 @@
 extends layout
 block content
   h1= title
-  - let artistid = toShow._id
-  - let artist_name = toShow.artist_name
-  - let artist_masterpiece_cost = toShow.artist_masterpiece_cost
-  - let artist_masterpiece_name = toShow.artist_masterpiece_name
+  if (toShow == null)
+    h2 No instance to update
+  else
+    - let artistid = toShow._id
+    - let artist_name = toShow.artist_name
+    - let artist_masterpiece_cost = toShow.artist_masterpiece_cost
+    - let artist_masterpiece_name = toShow.artist_masterpiece_name
 
-  div.row(class='mb-2')
-    div.mr-1 ID is
-      div #{artistid}
-    - let actionid = "/resource/artists/" + artistid
-    form(id='ArtistForm', action= actionid, method="PUT")
-      div.form-group
-        label.artistAttr(for='artist_name') Artist name
-        input#artist_name(type='text', name='artist_name', value= artist_name )
-      div.form-group
-        label.artistAttr(for='artist_masterpiece_cost') Artist Masterpiece cost
-        input#artist_masterpiece_cost(type='number', name='artist_masterpiece_cost', value= artist_masterpiece_cost )
-      div.form-group
-        label.artistAttr(for='artist_masterpiece_name') Artist Masterpiece Name
-        input#artist_masterpiece_name(type='text', name='artist_masterpiece_name', value= artist_masterpiece_name )
-      input(type="submit")
-  script.
-    document.forms['ArtistForm'].addEventListener('submit', (event) => {
-      event.preventDefault();
-      // TODO do something here to show user that form is being submitted
-      fetch(event.target.action, {
-        method: 'PUT',
-        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
-      }).then((resp) => {
-        return resp.json(); // or resp.text() or whatever the server sends
-      }).then((body) => {
-        alert("Update succeeded")
-        // TODO handle body
-      }).catch((error) => {
-        // TODO handle error
-        alert("Update failed " + error )
+    div.row(class='mb-2')
+      div.mr-1 ID is
+        div #{artistid}
+      - let actionid = "/resource/artists/" + artistid
+      form(id='ArtistForm', action= actionid, method="PUT")
+        div.form-group
+          label.artistAttr(for='artist_name') Artist name
+          input#artist_name(type='text', name='artist_name', value= artist_name )
+        div.form-group
+          label.artistAttr(for='artist_masterpiece_cost') Artist Masterpiece cost
+          input#artist_masterpiece_cost(type='number', name='artist_masterpiece_cost', value= artist_masterpiece_cost )
+        div.form-group
+          label.artistAttr(for='artist_masterpiece_name') Artist Masterpiece Name
+          input#artist_masterpiece_name(type='text', name='artist_masterpiece_name', value= artist_masterpiece_name )
+        input(type="submit")
+    script.
+      document.forms['ArtistForm'].addEventListener('submit', (event) => {
+        event.preventDefault();
+        // TODO do something here to show user that form is being submitted
+        fetch(event.target.action, {
+          method: 'PUT',
+          body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+        }).then((resp) => {
+          return resp.json(); // or resp.text() or whatever the server sends
+        }).then((body) => {
+          alert("Update succeeded")
+          // TODO handle body
+        }).catch((error) => {
+          // TODO handle error
+          alert("Update failed " + error )
+        });
       });
-    });
