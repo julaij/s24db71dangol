@@ -4,12 +4,12 @@ block content
   h1= title
   - var results = results
   div(class = 'container-fluid')
-    each result, index in results
-      div(class='row' onclick=`buy(${index})`)
-        div(class='col-sm-2') #{result.artist_name} 
-        div(class='col-sm-2') #{result.artist_masterpiece_cost} 
-        div(class='col-sm-2') #{result.artist_masterpiece_name}
+    div(class="row m-1")
+      each item in results
+       - let destination = `dispatch(\"/artists/update?id=${item._id}\")`
+        div(class="row-sm-2", class="m-1") Artist #{item.artist_name} (#{item.artist_masterpiece_name}) costs #{item.artist_masterpiece_cost}
+          button.btn( class="btn-primary ml-1", onclick= destination) Update
   script.
-    function buy(index) {
-      alert("You purchased item " + index);
+    function dispatch(path){
+      window.location.href=path
     }
