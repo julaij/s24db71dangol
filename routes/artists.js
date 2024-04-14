@@ -15,13 +15,13 @@ const secured = (req, res, next) => {
 router.get('/detail', artist_controlers.artist_view_one_Page);
 
 /* GET create artist page */
-router.get('/create', artist_controlers.artist_create_Page);
+router.get('/create', secured, artist_controlers.artist_create_Page);
 
 /* GET create update page */
 router.get('/update', secured, artist_controlers.artist_update_Page);
 
 /* GET delete artist page */
-router.get('/delete', artist_controlers.artist_delete_Page);
+router.get('/delete', secured, artist_controlers.artist_delete_Page);
 
 /* GET artists */
 router.get('/', artist_controlers.artist_view_all_Page);
