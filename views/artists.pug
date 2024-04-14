@@ -2,13 +2,18 @@ extends layout
 
 block content
   h1= title
+  button.btn(class="btn-success ml-1", onclick="window.location.href='artists/create'") Create Artist
   - var results = results
   div(class = 'container-fluid')
     div(class="row m-1")
       each item in results
        - let destination = `dispatch(\"/artists/update?id=${item._id}\")`
+       - let viewDestination = `/artists/detail?id=${item._id}`
+       - let deleteDestination = `/artists/delete?id=${item._id}`
         div(class="row-sm-2", class="m-1") Artist #{item.artist_name} (#{item.artist_masterpiece_name}) costs #{item.artist_masterpiece_cost}
           button.btn( class="btn-primary ml-1", onclick= destination) Update
+          button.btn(class="btn-info ml-1" onclick=`dispatch('${viewDestination}')`) View
+          button.btn(class="btn-danger ml-1" onclick=`dispatch('${deleteDestination}')`) Delete
   script.
     function dispatch(path){
       window.location.href=path
